@@ -1,24 +1,46 @@
 import React from "react";
-// import { useWeb3 } from "../ethereum/Web3Context";
+import Link from "next/link";
+import { Card, Button, Icon } from "semantic-ui-react";
+import Layout from "../components/Layout";
+import { useWeb3 } from "../ethereum/Web3Context";
 import { loadWeb3 } from "../ethereum/web3Utils";
 import campaignFactoryContract from "../ethereum/build/CampaignFactory.json";
 
 const { abi } = campaignFactoryContract;
 
+const renderCampaigns = (campaigns) => {
+  const items = campaigns.map((address) => ({
+    header: address,
+    description: (
+      <Link href="/campaign/[address]" as={`/campaign/${address}`}>
+        <a>View page</a>
+      </Link>
+    ),
+    fluid: true,
+  }));
+
+  return <Card.Group items={items} />;
+};
 export default ({ campaigns = [] }) => {
-  // const { factory } = useWeb3();
+  const { factory } = useWeb3();
 
   return (
-    <div>
-      <h1>This is the campaign list page!</h1>
-      {campaigns.map((campaign) => {
-        return (
-          <div key={campaign}>
-            <p>{campaign}</p>
-          </div>
-        );
-      })}
-    </div>
+    <Layout>
+      <Link href="/campaign/new">
+        <a>
+          <Button
+            floated="right"
+            icon={true}
+            primary={true}
+            labelPosition="left"
+          >
+            <Icon name="add" />
+            Create new campaign
+          </Button>
+        </a>
+      </Link>
+      {renderCampaigns(campaigns)}
+    </Layout>
   );
 };
 
