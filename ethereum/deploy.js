@@ -1,5 +1,6 @@
-import dotenv from "dotenv";
-dotenv.config();
+import env from "../environment.json";
+
+const { MNEMONIC } = env;
 
 import HDWalletProvider from "@truffle/hdwallet-provider";
 import Web3 from "web3";
@@ -8,7 +9,7 @@ import compiledFactory from "./build/CampaignFactory.json";
 const { abi, evm } = compiledFactory;
 
 const provider = new HDWalletProvider(
-  process.env.MNEMONIC,
+  MNEMONIC,
   "https://rinkeby.infura.io/v3/455c93099a8b465a86a2b2e2261341e9"
 );
 const web3 = new Web3(provider);
@@ -27,4 +28,4 @@ const deploy = async () => {
 
 deploy();
 
-// Last deployment address: 0xfEd4a9f2343F459e5725d1A44bD07B6AAC755aA9
+// Last deployment address: 0x1708Eb506AAcdb9843BA128Fd622Ab7DA92e23C5
