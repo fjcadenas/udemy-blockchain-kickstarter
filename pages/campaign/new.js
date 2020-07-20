@@ -11,25 +11,27 @@ const CampaignNew = () => {
   const router = useRouter();
   const { factory, accounts } = useWeb3();
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setErrorMessage("");
+    try {
+      // no need to specify gas amount when coming from a web3 browser
+      await factory.methods
+        .createCampaign(contribution)
+        .send({ from: accounts[0] });
+      router.push("/");
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+    setIsLoading(false);
+  }
+
   return (
     <Layout>
       <h3>Create a campaign</h3>
       <Form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          setIsLoading(true);
-          setErrorMessage("");
-          try {
-            // no need to specify gas amount when coming from a web3 browser
-            await factory.methods
-              .createCampaign(contribution)
-              .send({ from: accounts[0] });
-            router.push("/");
-          } catch (error) {
-            setErrorMessage(error.message);
-          }
-          setIsLoading(false);
-        }}
+        onSubmit={onSubmit}
         error={!!errorMessage}
       >
         <Form.Field>
