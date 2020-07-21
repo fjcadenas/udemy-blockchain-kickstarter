@@ -2,12 +2,12 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { Card, Grid, Button } from "semantic-ui-react";
-import Layout from "../../../components/Layout";
-import ContributeFrom from "../../../components/ContributeForm";
-import { useWeb3 } from "../../../ethereum/Web3Context";
 
-import campaignContract from "../../../ethereum/build/Campaign.json";
-import { loadWeb3 } from "../../../ethereum/web3Utils";
+import Layout from "components/Layout";
+import ContributeFrom from "components/ContributeForm";
+import { useWeb3 } from "ethereum/Web3Context";
+import campaignContract from "ethereum/build/Campaign.json";
+import { loadWeb3 } from "ethereum/web3Utils";
 
 const { abi } = campaignContract;
 
@@ -67,7 +67,7 @@ const CampaignView = ({
         style: { overflowWrap: "break-word" },
       },
     ],
-    []
+    [manager, minimumContribution, requestsLength, approversCount, balance]
   );
 
   return (
@@ -104,9 +104,9 @@ export async function getServerSideProps(context) {
   const {
     params: { address },
   } = context;
-  const campaignFactory = new web3.eth.Contract(abi, address);
+  const campaign = new web3.eth.Contract(abi, address);
 
-  const summary = (await campaignFactory.methods.getSummary().call()) ?? [];
+  const summary = (await campaign.methods.getSummary().call()) ?? [];
 
   return {
     props: {

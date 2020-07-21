@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { Button, Form, Input, Message } from "semantic-ui-react";
-import Layout from "../../components/Layout";
-import { useWeb3 } from "../../ethereum/Web3Context";
+import Layout from "components/Layout";
+import { useWeb3 } from "ethereum/Web3Context";
 
 const CampaignNew = () => {
   const [contribution, setContribution] = useState("");

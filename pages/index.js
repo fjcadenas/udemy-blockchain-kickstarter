@@ -1,10 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import { Card, Button, Icon } from "semantic-ui-react";
-import Layout from "../components/Layout";
-import { useWeb3 } from "../ethereum/Web3Context";
-import { loadWeb3 } from "../ethereum/web3Utils";
-import campaignFactoryContract from "../ethereum/build/CampaignFactory.json";
+import Layout from "components/Layout";
+import { useWeb3 } from "ethereum/Web3Context";
+import { loadWeb3 } from "ethereum/web3Utils";
+import campaignFactoryContract from "ethereum/build/CampaignFactory.json";
 
 const { abi } = campaignFactoryContract;
 
